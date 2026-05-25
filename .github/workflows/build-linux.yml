@@ -1,12 +1,8 @@
 name: Build Linux .jmo
 
-# Bu workflow her yeni release oluşturulduğunda otomatik çalışır.
-# Linux için outbreakTools'u derler ve release'e .jmo dosyasını ekler.
-
 on:
   release:
     types: [published]
-  # Manual tetikleme — Actions sekmesinden butonla da çalıştırılabilir
   workflow_dispatch:
 
 jobs:
@@ -14,15 +10,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      # ----------------------------------------------------------------
-      # 1) Repo'yu çek
-      # ----------------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ----------------------------------------------------------------
-      # 2) Sistem bağımlılıklarını kur (R paketleri için)
-      # ----------------------------------------------------------------
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -31,54 +21,92 @@ jobs:
             libgit2-dev libfontconfig1-dev libharfbuzz-dev \
             libfribidi-dev libfreetype6-dev libpng-dev \
             libtiff5-dev libjpeg-dev libudunits2-dev \
-            libgdal-dev libgeos-dev libproj-dev libgsl-dev
+            libgdal-dev libgeos-dev libproj-dev libgsl-dev \
+            libnlopt-dev cmake
 
-      # ----------------------------------------------------------------
-      # 3) R'ı kur
-      # ----------------------------------------------------------------
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.4.0'
 
-      # ----------------------------------------------------------------
-      # 4) Flatpak ve jamovi'yi kur
-      # ----------------------------------------------------------------
-      - name: Install jamovi (via flatpak)
+      # ------------------------------------------------------------------
+      # jamovi flatpak yerine: AppImage'i direkt indir, extract et
+      # Bu daha hızlı ve path daha öngörülebilir
+      # ------------------------------------------------------------------
+      - name: Download jamovi
         run: |
+          # En son jamovi Linux release'ini indir
+          # Flatpak yerine doğrudan tar.gz / AppImage
+          wget -q "https://www.jamovi.org/downloads/jamovi-2.6.26.0-linux.flatpak" -O jamovi.flatpak || true
+          
+          # Alternatif: flathub'dan flatpak ile kur ve path'i kontrol et
           sudo apt-get install -y flatpak
           flatpak --user remote-add --if-not-exists flathub \
             https://flathub.org/repo/flathub.flatpakrepo
           flatpak --user install -y --noninteractive flathub org.jamovi.jamovi
+          
+          # Flatpak'in gerçek yolunu bul ve göster
+          echo "=== Searching for jamovi files ==="
+          find ~/.var -name "jamovi*" -type f 2>/dev/null | head -20
+          echo ""
+          find ~/.local/share/flatpak -name "jamovi*" 2>/dev/null | head -20
+          echo ""
+          echo "=== Listing flatpak app dir ==="
+          ls -la ~/.local/share/flatpak/app/org.jamovi.jamovi/current/active/files/ 2>/dev/null || true
+          ls -la ~/.local/share/flatpak/app/org.jamovi.jamovi/x86_64/stable/active/files/ 2>/dev/null || true
 
-      # ----------------------------------------------------------------
-      # 5) jmvtools ve modül bağımlılıklarını kur
-      # ----------------------------------------------------------------
       - name: Install R packages
         run: |
           R -e "install.packages('jmvtools', repos=c('https://repo.jamovi.org','https://cran.r-project.org'))"
           R -e "install.packages(c('R6','jmvcore','dplyr','tidyr','ggplot2','lubridate','janitor','stringr','stringi','scales','epitools','epiR','purrr'), repos='https://cran.r-project.org')"
 
-      # ----------------------------------------------------------------
-      # 6) Modülü derle
-      # ----------------------------------------------------------------
-      - name: Build module
+      - name: Locate jamovi and build module
         run: |
-          JAMOVI_HOME=~/.var/app/org.jamovi.jamovi/data/jamovi
-          R -e "jmvtools::install(home='$JAMOVI_HOME')"
+          # Flatpak'in jamovi'sini bul (deneyebilecek birkaç yol var)
+          JAMOVI_PATHS=(
+            "$HOME/.local/share/flatpak/app/org.jamovi.jamovi/current/active/files"
+            "$HOME/.local/share/flatpak/app/org.jamovi.jamovi/x86_64/stable/active/files"
+            "/var/lib/flatpak/app/org.jamovi.jamovi/current/active/files"
+            "/var/lib/flatpak/app/org.jamovi.jamovi/x86_64/stable/active/files"
+          )
+          
+          JAMOVI_HOME=""
+          for p in "${JAMOVI_PATHS[@]}"; do
+            if [ -d "$p" ]; then
+              JAMOVI_HOME="$p"
+              echo "Found jamovi at: $JAMOVI_HOME"
+              ls -la "$JAMOVI_HOME"
+              break
+            fi
+          done
+          
+          if [ -z "$JAMOVI_HOME" ]; then
+            echo "ERROR: jamovi installation not found!"
+            echo "All flatpak apps:"
+            ls -la $HOME/.local/share/flatpak/app/ 2>/dev/null || true
+            ls -la /var/lib/flatpak/app/ 2>/dev/null || true
+            exit 1
+          fi
+          
+          # Modülü derle
+          R -e "jmvtools::install(home='$JAMOVI_HOME')" 2>&1 | tee build.log
+          
+          # .jmo üretildi mi kontrol et
+          if ! ls outbreakTools_*.jmo >/dev/null 2>&1; then
+            echo "ERROR: No .jmo file produced!"
+            echo "=== Last 50 lines of build log ==="
+            tail -50 build.log
+            exit 1
+          fi
+          
+          echo "=== Build successful ==="
+          ls -lh outbreakTools_*.jmo
 
-      # ----------------------------------------------------------------
-      # 7) Üretilen .jmo'yu yeniden adlandır
-      # ----------------------------------------------------------------
       - name: Rename .jmo for Linux
         run: |
           mv outbreakTools_*.jmo outbreakTools_1.1.0_linux.jmo
           ls -lh outbreakTools_1.1.0_linux.jmo
 
-      # ----------------------------------------------------------------
-      # 8) Artifact olarak yükle (her zaman yapılır — manual trigger'da
-      #    Release olmasa bile dosyaya erişebilirsin)
-      # ----------------------------------------------------------------
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -86,9 +114,6 @@ jobs:
           path: outbreakTools_1.1.0_linux.jmo
           retention-days: 30
 
-      # ----------------------------------------------------------------
-      # 9) Release'e ekle (sadece release tetiklemesinde)
-      # ----------------------------------------------------------------
       - name: Upload to release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
