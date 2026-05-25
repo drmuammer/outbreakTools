@@ -2,11 +2,12 @@
 
 [![jamovi module](https://img.shields.io/badge/jamovi-module-blue)](https://www.jamovi.org)
 [![FETP](https://img.shields.io/badge/Turkey%20FETP-Outbreak%20Analysis-red)](https://hsgm.saglik.gov.tr)
-[![Version](https://img.shields.io/badge/version-1.1.0-green)](.)
-[![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)](INSTALL.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-green)](https://github.com/drmuammer/outbreakTools/releases/latest)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
+[![Platforms](https://img.shields.io/badge/platforms-Windows%20%E2%9C%85%20%7C%20macOS%20%F0%9F%94%9C%20%7C%20Linux%20%F0%9F%94%9C-lightgrey)](#installation)
 
-> **Developed by Gülser Doğan Türkçelik & Muammer Beslen — Turkey FETP**  
-> Field Epidemiology Training Programme, Turkey  
+> **Developed by Gülser Doğan Türkçelik & Muammer Beslen — Turkey FETP**
+> Field Epidemiology Training Programme, Turkey
 > *"Epidemiological expertise supported by reproducible analytics"*
 
 ---
@@ -19,18 +20,65 @@ The module implements statistically rigorous methods following international fie
 
 ---
 
+## Installation
+
+### For end users — install the prebuilt module
+
+Download the platform-specific `.jmo` file from the **[latest release](https://github.com/drmuammer/outbreakTools/releases/latest)** and sideload it in jamovi.
+
+| Platform | File | Status |
+|---|---|---|
+| **Windows (64-bit)** | `outbreakTools_1.1.0_win64.jmo` | ✅ Available |
+| **macOS (Apple Silicon)** | `outbreakTools_1.1.0_macos_arm64.jmo` | 🔜 Coming soon |
+| **macOS (Intel)** | `outbreakTools_1.1.0_macos_intel.jmo` | 🔜 Coming soon |
+| **Linux (x86_64)** | `outbreakTools_1.1.0_linux.jmo` | 🔜 Coming soon |
+
+**Steps:**
+
+1. Download the `.jmo` file matching your operating system from the releases page
+2. Open jamovi
+3. Click the **⊕ Modules** icon in the top-right corner
+4. Choose **Sideload module** (or **Install from file** in older versions)
+5. Select the downloaded `.jmo` file
+6. After a brief installation, the **Outbreak Tools** menu appears in the analyses ribbon
+
+**Requirements:** jamovi ≥ 2.3.0 ([download here](https://www.jamovi.org/download.html))
+
+### For developers — build from source
+
+If your platform's binary isn't yet available, or you want to modify the module, see [INSTALL.md](INSTALL.md) for full build instructions.
+
+Quick start:
+
+```r
+# In R / RStudio:
+install.packages('jmvtools',
+  repos = c('https://repo.jamovi.org', 'https://cran.r-project.org'))
+
+# Set working directory to the cloned repo, then:
+jmvtools::install(home = "<path-to-your-jamovi-installation>")
+```
+
+Platform-specific jamovi paths:
+
+- **Windows:** `C:/Program Files/jamovi <version>`
+- **macOS:** `/Applications/jamovi.app/Contents/Frameworks/jamovi`
+- **Linux (flatpak):** `~/.var/app/org.jamovi.jamovi/data/jamovi`
+
+---
+
 ## Analyses Included
 
 | # | Analysis | Menu | Key Outputs |
 |---|---|---|---|
-| 1 | **Data Quality Check** *(v1.1: ★ OpenRefine-style cleaning)* | Outbreak Tools › Data Management | Duplicates, missing, date errors, range checks, **fingerprint clustering**, **date-format diversity**, **copy-paste R cleaning recipes** |
-| 2 | **Descriptive Epidemiology** | Outbreak Tools › Descriptive | Freq tables, attack rates, Wilson 95% CI |
-| 3 | **Epidemic Curve** | Outbreak Tools › Descriptive | ISO epi-week histogram, case table |
-| 4 | **Cohort Study** | Outbreak Tools › Analytic | RR, AR, PAR, chi-square |
-| 5 | **Case-Control Study** | Outbreak Tools › Analytic | OR, Woolf CI, Fisher exact |
-| 6 | **Stratified Analysis (MH)** | Outbreak Tools › Analytic | MH-RR/OR, Breslow-Day test |
-| 7 | **Logistic Regression** | Outbreak Tools › Analytic | Crude/adjusted OR, forest plot, model fit |
-| 8 | **Sample Size Calculator** | Outbreak Tools › Study Design | N by design, power curve |
+| 1 | **Data Quality & Linelist Check** *(v1.1: ★ OpenRefine-style cleaning)* | 01. Data Management | Duplicates, missing, date errors, range checks, **fingerprint clustering**, **date-format diversity**, **copy-paste R cleaning recipes** |
+| 2 | **Descriptive Epidemiology** | 02. Descriptive Analysis | Freq tables, attack rates, Wilson 95% CI |
+| 3 | **Epidemic Curve** | 02. Descriptive Analysis | ISO epi-week histogram, case table, group stacking |
+| 4 | **Cohort Study — Risk Analysis** | 03. Analytic Epidemiology | RR, AR, PAR, chi-square |
+| 5 | **Case-Control Study — Odds Ratio** | 03. Analytic Epidemiology | OR, Woolf CI, Fisher exact |
+| 6 | **Stratified Analysis (Mantel-Haenszel)** | 03. Analytic Epidemiology | MH-RR/OR, Breslow-Day test |
+| 7 | **Logistic Regression** | 03. Analytic Epidemiology | Crude/adjusted OR, forest plot, model fit |
+| 8 | **Sample Size Calculator** | 04. Study Design | N by design, power curve |
 
 ### What's new in v1.1.0
 
@@ -48,8 +96,12 @@ Cleaning Assistant** inspired by [OpenRefine](https://openrefine.org/):
   the data, including merge-cluster code with auto-suggested canonical
   values.
 
-See `INSTALL.md` for cross-platform build instructions and
-`USAGE.md` (if present) for analysis-by-analysis walkthroughs.
+Additional fixes:
+
+- Sample Size Calculator no longer crashes on launch
+- Pedagogically ordered menu: Data Management → Descriptive → Analytic → Study Design
+- Wide-span epidemic curves now use smarter axis labels (no more overlap)
+- Cross-platform encoding stability for non-ASCII data
 
 ---
 
@@ -92,80 +144,18 @@ See `INSTALL.md` for cross-platform build instructions and
 
 ---
 
-## File Structure
-
-```
-outbreakTools/
-├── DESCRIPTION                    ← R package metadata & authorship
-├── NAMESPACE                      ← R namespace declarations
-├── README.md                      ← This document
-│
-├── R/                             ← R analysis implementations
-│   ├── utils.R                    ← Core statistical functions (RR, OR, MH, CI, SS)
-│   ├── obt_clean.b.R              ← Data quality check
-│   ├── obt_epicurve.b.R           ← Epidemic curve
-│   ├── obt_descriptive.b.R        ← Descriptive epi + cohort + case-control
-│   └── obt_stratified.b.R         ← MH stratified + logistic + sample size
-│
-├── jamovi/                        ← jamovi UI and results definitions
-│   ├── 0000.yaml                  ← Module manifest
-│   ├── obt_clean.a.yaml           ← Data cleaning options
-│   ├── obt_clean.r.yaml           ← Data cleaning results
-│   ├── obt_epicurve.a.yaml        ← Epicurve options
-│   ├── obt_epicurve.r.yaml        ← Epicurve results
-│   ├── obt_descriptive.a.yaml     ← Descriptive options + results
-│   ├── obt_cohort.a.yaml          ← Cohort options + results
-│   ├── obt_casecontrol.a.yaml     ← Case-control options + results
-│   ├── obt_stratified.a.yaml      ← Stratified options + results
-│   └── obt_logistic.a.yaml        ← Logistic + sample size options + results
-│
-└── data-raw/
-    └── generate_demo_data.R       ← Simulated foodborne outbreak dataset
-```
-
----
-
-## Installation
-
-### Prerequisites
-- jamovi ≥ 2.3.0 (https://www.jamovi.org/download.html)
-- R ≥ 4.1.0
-
-### Required R Packages
-```r
-install.packages(c(
-  "jmvcore", "R6", "dplyr", "tidyr", "ggplot2",
-  "lubridate", "janitor", "stringr", "scales",
-  "epitools", "epiR", "purrr"
-))
-```
-
-### Install in jamovi (from .jmo file)
-1. Build the module: `jmvtools::build()` in the `outbreakTools/` directory
-2. Open jamovi → **☰ Menu → Manage Modules → Install from file**
-3. Select `outbreakTools_1.1.0.jmo`
-
-### Developer installation (for testing)
-```r
-remotes::install_github("jamovi/jmvtools")
-setwd("outbreakTools/")
-jmvtools::install()   # installs directly into jamovi
-```
-
----
-
 ## Demo Dataset
 
-A simulated foodborne outbreak linelist (`data/foodborne_outbreak.csv`, N=500: 250 cases + 250 controls) is provided.
+A simulated foodborne outbreak linelist (`inst/extdata/foodborne_outbreak.csv`, N=500: 250 cases + 250 controls) is included with the module.
 
-Generate it:
+To regenerate or modify:
 ```r
 source("data-raw/generate_demo_data.R")
 ```
 
 The dataset includes intentional data quality issues for training:
 - Duplicate case IDs (3 pairs)
-- Future onset dates (2 records)  
+- Future onset dates (2 records)
 - Out-of-range age values (-3, 155)
 - Inconsistent sex coding ("Male", "male", "MALE", "M")
 - Combined age/sex column (`65/M` format)
@@ -173,6 +163,7 @@ The dataset includes intentional data quality issues for training:
 - Missing values in multiple variables
 
 ### Suggested training workflow
+
 1. **Data Quality Check** → `case_id`, `date_onset`, `sex`, `district`, `age_years`
 2. **Descriptive Epi** → Case Status = `case_control` (Case), Person vars = `sex`, `age_group`, `district`
 3. **Epidemic Curve** → Date = `date_onset`, Group = `case_control`, Unit = Day
@@ -184,28 +175,81 @@ The dataset includes intentional data quality issues for training:
 
 ---
 
+## File Structure
+
+```
+outbreakTools/
+├── DESCRIPTION                      ← R package metadata & authorship
+├── NAMESPACE                        ← R namespace declarations
+├── LICENSE                          ← GPL-3.0 full text
+├── README.md                        ← This document
+├── INSTALL.md                       ← Cross-platform build guide
+├── CONTRIBUTORS.md                  ← Contribution credits
+│
+├── R/                               ← R analysis implementations
+│   ├── utils.R                      ← Core stats + Smart Cleaning helpers
+│   ├── obtclean.b.R / .h.R          ← Data Quality & Linelist Check
+│   ├── obtdescriptive.b.R / .h.R    ← Descriptive Epi
+│   ├── obtepicurve.b.R / .h.R       ← Epidemic Curve
+│   ├── obtcohort.b.R / .h.R         ← Cohort Study
+│   ├── obtcasecontrol.b.R / .h.R    ← Case-Control Study
+│   ├── obtstratified.b.R / .h.R     ← Stratified Analysis (MH)
+│   ├── obtlogistic.b.R / .h.R       ← Logistic Regression
+│   └── obtsamplesize.b.R / .h.R     ← Sample Size Calculator
+│
+├── jamovi/                          ← jamovi UI and results definitions
+│   ├── 0000.yaml                    ← Module manifest
+│   ├── obt*.a.yaml                  ← Analysis options (one per analysis)
+│   ├── obt*.r.yaml                  ← Result table specifications
+│   └── obt*.u.yaml                  ← UI layouts (auto-generated)
+│
+├── inst/extdata/
+│   └── foodborne_outbreak.csv       ← Bundled demo dataset
+│
+└── data-raw/
+    └── generate_demo_data.R         ← Script to regenerate the demo
+```
+
+---
+
 ## Citation
 
 If using this module in outbreak reports, publications, or FETP theses:
 
 **APA (7th edition)**
-> Doğan Türkçelik, G., & Beslen, M. (2025). *outbreakTools: Outbreak Analysis Tools for Field Epidemiology* (Version 1.1.0) [jamovi module]. Turkey FETP.
+> Doğan Türkçelik, G., & Beslen, M. (2026). *outbreakTools: Outbreak Analysis Tools for Field Epidemiology* (Version 1.1.0) [jamovi module]. Turkey FETP. https://github.com/drmuammer/outbreakTools
 
 **Vancouver**
-> Doğan Türkçelik G, Beslen M. outbreakTools: Outbreak Analysis Tools for Field Epidemiology [Internet]. Version 1.1.0. Turkey FETP; 2025.
+> Doğan Türkçelik G, Beslen M. outbreakTools: Outbreak Analysis Tools for Field Epidemiology [Internet]. Version 1.1.0. Turkey FETP; 2026. Available from: https://github.com/drmuammer/outbreakTools
 
 **In-text (English)**
-> "Analyses were conducted using the outbreakTools jamovi module (v1.1.0; Doğan Türkçelik & Beslen, 2025, Turkey FETP)."
+> "Analyses were conducted using the outbreakTools jamovi module (v1.1.0; Doğan Türkçelik & Beslen, 2026, Turkey FETP)."
 
 **In-text (Turkish)**
 > "Analizler, Gülser Doğan Türkçelik ve Muammer Beslen tarafından Türkiye FETP kapsamında geliştirilen outbreakTools jamovi modülü (v1.1.0) kullanılarak yürütülmüştür."
 
 ---
 
+## Bug Reports & Contributions
+
+Found an issue or want to suggest an improvement?
+
+- **Bug reports:** [Open an issue](https://github.com/drmuammer/outbreakTools/issues/new)
+- **Feature suggestions:** Same — issues with the `enhancement` label
+- **Pull requests** are welcome; see `CONTRIBUTORS.md` for guidelines
+
+---
+
 ## License
-GPL (≥ 2) — see https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+This module is licensed under the **GNU General Public License v3.0** — see [LICENSE](LICENSE) for the full text.
+
+You may freely use, modify, and redistribute this software, provided that any derivative work is also distributed under GPL-3.0.
 
 ---
 
 ## Acknowledgements
-Developed within the framework of the Turkey Field Epidemiology Training Programme (FETP). Statistical methodology based on WHO, CDC, and peer-reviewed epidemiological literature standards.
+
+Developed within the framework of the **Turkey Field Epidemiology Training Programme (FETP)**. Statistical methodology based on WHO, CDC, and peer-reviewed epidemiological literature standards.
+
+Special thanks to the jamovi development team for the excellent R6 / jmvcore framework that makes modules like this possible.
