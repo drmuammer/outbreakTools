@@ -1,0 +1,92 @@
+---
+name: obtepicurve
+title: Epidemic Curve
+menuGroup: Outbreak Tools
+menuSubgroup: 2. Descriptive Analysis
+version: '1.0.0'
+jas: '1.2'
+
+description:
+    main: >
+        Generates publication-quality epidemic curves (histograms of case counts
+        over time) for outbreak investigation. Supports ISO epi-week, day, and
+        month intervals. Includes optional case classification grouping and
+        case-count table.
+
+options:
+    - name: data
+      type: Data
+
+    - name: dateVar
+      title: Date of Symptom Onset
+      type: Variable
+      suggested: [continuous, ordinal, nominal]
+      permitted: [numeric, factor, id]
+
+    - name: groupVar
+      title: Grouping Variable (optional)
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+      default: null
+
+    - name: timeUnit
+      title: Time Interval
+      type: List
+      options:
+          - {title: 'Day',             name: day}
+          - {title: 'Epi Week (Mon–Sun ISO)', name: week}
+          - {title: 'Epi Week (Sun–Sat)',     name: week_sun}
+          - {title: 'Month',           name: month}
+      default: week
+
+    - name: dateFormat
+      title: Input Date Format
+      type: List
+      options:
+          - {title: Auto-detect, name: auto}
+          - {title: 'YYYY-MM-DD',  name: ymd}
+          - {title: 'DD/MM/YYYY',  name: dmy}
+          - {title: 'MM/DD/YYYY',  name: mdy}
+      default: auto
+
+    - name: plotTitle
+      title: Plot Title
+      type: String
+      default: 'Epidemic Curve'
+
+    - name: xLabel
+      title: X-axis Label
+      type: String
+      default: 'Date / Period of Symptom Onset'
+
+    - name: yLabel
+      title: Y-axis Label
+      type: String
+      default: 'Number of Cases'
+
+    - name: fillColour
+      title: Bar Colour (no grouping)
+      type: List
+      options:
+          - {title: Navy Blue,    name: navy}
+          - {title: Firebrick,    name: red}
+          - {title: Forest Green, name: green}
+          - {title: Steel Blue,   name: steel}
+          - {title: Dark Orange,  name: orange}
+      default: navy
+
+    - name: showTable
+      title: Show case count table
+      type: Bool
+      default: true
+
+    - name: showNLabel
+      title: Show N= on plot
+      type: Bool
+      default: true
+
+    - name: showPeakLine
+      title: Annotate peak period
+      type: Bool
+      default: true

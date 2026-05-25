@@ -1,0 +1,33 @@
+name: obtdescriptive
+title: Descriptive Epidemiology
+jrs: '1.1'
+
+items:
+    - name: ageTable
+      title: Age Summary (Cases)
+      type: Table
+      visible: (ageVar)
+      columns:
+          - {name: stat,  title: Statistic, type: text}
+          - {name: value, title: Value,     type: text}
+
+    - name: freqTables
+      title: Frequency Tables
+      type: Array
+      items: (personVars)
+      template:
+          title: $key
+          type: Table
+          columns:
+              - {name: level,   title: Category,      type: text}
+              - {name: n,       title: N Cases,        type: integer}
+              - {name: total,   title: N Total,        type: integer}
+              - {name: pct,     title: '% (of cases)', type: number, format: 'zto,pct'}
+              - {name: ar,      title: 'Attack Rate',  type: number, format: 'zto,pct'}
+              - {name: ci_low,  title: 'CI Low',       type: number, format: 'zto,pct'}
+              - {name: ci_high, title: 'CI High',      type: number, format: 'zto,pct'}
+
+    - name: descNote
+      title: Notes & References
+      type: Html
+      visible: always

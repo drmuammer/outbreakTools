@@ -1,0 +1,33 @@
+---
+name: obtepicurve
+title: Epidemic Curve
+jrs: '1.1'
+
+items:
+    - name: epicurvePlot
+      title: Epidemic Curve
+      type: Image
+      width: 720
+      height: 460
+      renderFun: .plot
+      requiresData: true
+      clearWith: [dateVar, groupVar, timeUnit, dateFormat, plotTitle,
+                  xLabel, yLabel, fillColour, showNLabel, showPeakLine]
+
+    - name: caseTable
+      title: Case Counts by Period
+      type: Table
+      visible: (showTable)
+      clearWith: [dateVar, groupVar, timeUnit, dateFormat]
+      columns:
+          - {name: period, title: Period,        type: text}
+          - {name: epiWk,  title: 'Epi Week',    type: text}
+          - {name: n,      title: 'N Cases',      type: integer}
+          - {name: pct,    title: '%',            type: number, format: 'zto,pct'}
+          - {name: cumN,   title: 'Cumulative N', type: integer}
+          - {name: cumPct, title: 'Cumulative %', type: number, format: 'zto,pct'}
+
+    - name: epicurveSummary
+      title: Summary Statistics
+      type: Html
+      visible: always

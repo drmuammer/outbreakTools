@@ -1,0 +1,42 @@
+name: obtcasecontrol
+title: Case-Control Study — Odds Ratio
+jrs: '1.1'
+
+items:
+    - name: crossTab
+      title: 2×2 Contingency Table
+      type: Table
+      columns:
+          - {name: exposure,  title: '',          type: text}
+          - {name: cases,     title: Cases,        type: integer}
+          - {name: controls,  title: Controls,     type: integer}
+          - {name: total,     title: Total,        type: integer}
+          - {name: exp_pct,   title: 'Exposed %',  type: number, format: zto}
+    - name: measuresTable
+      title: Measures of Association
+      type: Table
+      columns:
+          - {name: measure,  title: Measure,   type: text}
+          - {name: estimate, title: Estimate,  type: number, format: zto}
+          - {name: ci_low,   title: CI Low,    type: number, format: zto}
+          - {name: ci_high,  title: CI High,   type: number, format: zto}
+          - {name: p_value,  title: p-value,   type: number, format: 'zto,pvalue'}
+    - name: chiTable
+      title: Statistical Tests
+      type: Table
+      columns:
+          - {name: test, title: Test,    type: text}
+          - {name: stat, title: Value,   type: number, format: zto}
+          - {name: df,   title: df,      type: integer}
+          - {name: p,    title: p-value, type: number, format: 'zto,pvalue'}
+    - name: forestPlot
+      title: Estimate Plot
+      type: Image
+      width: 480
+      height: 200
+      renderFun: .plotForest
+      visible: (showForest)
+    - name: ccNote
+      title: Interpretation & References
+      type: Html
+      visible: always

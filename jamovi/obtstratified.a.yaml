@@ -1,0 +1,46 @@
+name: obtstratified
+title: Stratified Analysis (Mantel-Haenszel)
+menuGroup: Outbreak Tools
+menuSubgroup: 3. Analytic Epidemiology
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+    - name: exposureVar
+      title: Exposure Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+    - name: exposedLevel
+      title: Exposed Level
+      type: String
+      default: '1'
+    - name: outcomeVar
+      title: Outcome Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+    - name: caseLevel
+      title: Case Level
+      type: String
+      default: '1'
+    - name: stratVar
+      title: Stratification Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+    - name: studyDesign
+      title: Study Design
+      type: List
+      options:
+          - {title: 'Cohort (Risk Ratio)',        name: cohort}
+          - {title: 'Case-Control (Odds Ratio)',   name: casecontrol}
+      default: cohort
+    - name: ciLevel
+      title: Confidence Level
+      type: Number
+      min: 0.80
+      max: 0.99
+      default: 0.95

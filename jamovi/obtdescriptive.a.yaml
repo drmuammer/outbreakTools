@@ -1,0 +1,62 @@
+name: obtdescriptive
+title: Descriptive Epidemiology
+menuGroup: Outbreak Tools
+menuSubgroup: 2. Descriptive Analysis
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: caseVar
+      title: Case Status Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+      default: null
+
+    - name: caseLevel
+      title: Value representing a Case
+      type: String
+      default: '1'
+
+    - name: personVars
+      title: Person / Place Variables
+      type: Variables
+      suggested: [nominal, ordinal]
+      permitted: [factor, id, numeric]
+      default: null
+
+    - name: ageVar
+      title: Age Variable (continuous)
+      type: Variable
+      suggested: [continuous]
+      permitted: [numeric]
+      default: null
+
+    - name: showAR
+      title: Calculate Attack Rates
+      type: Bool
+      default: true
+
+    - name: ciMethod
+      title: CI Method for Proportions
+      type: List
+      options:
+          - {title: 'Wilson score (recommended)', name: wilson}
+          - {title: 'Clopper-Pearson exact',      name: exact}
+          - {title: 'Normal (Wald)',               name: wald}
+      default: wilson
+
+    - name: ciLevel
+      title: Confidence Level
+      type: Number
+      min: 0.80
+      max: 0.99
+      default: 0.95
+
+    - name: showMissing
+      title: Include missing row
+      type: Bool
+      default: true

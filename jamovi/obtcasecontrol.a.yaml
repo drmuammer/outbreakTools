@@ -1,0 +1,38 @@
+name: obtcasecontrol
+title: Case-Control Study — Odds Ratio
+menuGroup: Outbreak Tools
+menuSubgroup: 3. Analytic Epidemiology
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+    - name: exposureVar
+      title: Exposure Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+    - name: exposedLevel
+      title: Exposed Level
+      type: String
+      default: '1'
+    - name: outcomeVar
+      title: Case/Control Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+    - name: caseLevel
+      title: Case Level
+      type: String
+      default: '1'
+    - name: ciLevel
+      title: Confidence Level
+      type: Number
+      min: 0.80
+      max: 0.99
+      default: 0.95
+    - name: showForest
+      title: Show estimate plot
+      type: Bool
+      default: true

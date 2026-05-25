@@ -1,0 +1,46 @@
+name: obtcohort
+title: Cohort Study — Risk Analysis
+jrs: '1.1'
+
+items:
+    - name: crossTab
+      title: 2×2 Contingency Table
+      type: Table
+      columns:
+          - {name: exposure,  title: '',            type: text}
+          - {name: cases,     title: Cases,          type: integer}
+          - {name: nonCases,  title: Non-Cases,      type: integer}
+          - {name: total,     title: Total,          type: integer}
+          - {name: ar_pct,    title: 'Attack Rate %',type: number, format: zto}
+
+    - name: measuresTable
+      title: Measures of Association
+      type: Table
+      columns:
+          - {name: measure,  title: Measure,    type: text}
+          - {name: estimate, title: Estimate,   type: number, format: zto}
+          - {name: ci_low,   title: 'CI Low',   type: number, format: zto}
+          - {name: ci_high,  title: 'CI High',  type: number, format: zto}
+          - {name: p_value,  title: 'p-value',  type: number, format: 'zto,pvalue'}
+
+    - name: chiTable
+      title: Statistical Tests
+      type: Table
+      columns:
+          - {name: test,  title: Test,    type: text}
+          - {name: stat,  title: Value,   type: number, format: zto}
+          - {name: df,    title: df,      type: integer}
+          - {name: p,     title: p-value, type: number, format: 'zto,pvalue'}
+
+    - name: forestPlot
+      title: Estimate Plot
+      type: Image
+      width: 480
+      height: 220
+      renderFun: .plotForest
+      visible: (showForest)
+
+    - name: cohortNote
+      title: Interpretation & References
+      type: Html
+      visible: always

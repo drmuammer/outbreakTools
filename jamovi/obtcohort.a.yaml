@@ -1,0 +1,61 @@
+name: obtcohort
+title: Cohort Study — Risk Analysis
+menuGroup: Outbreak Tools
+menuSubgroup: 3. Analytic Epidemiology
+version: '1.0.0'
+jas: '1.2'
+
+description:
+    main: >
+        2×2 table analysis for cohort and cross-sectional outbreak designs.
+        Calculates Risk Ratio (Relative Risk), Attributable Risk, Population
+        Attributable Risk with 95% confidence intervals and chi-square tests.
+        Reference: Rothman & Greenland (2008); CDC Field Epi Manual (2012).
+
+options:
+    - name: data
+      type: Data
+
+    - name: exposureVar
+      title: Exposure Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+
+    - name: exposedLevel
+      title: Exposed Level (value)
+      type: String
+      default: '1'
+
+    - name: outcomeVar
+      title: Outcome / Case Variable
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+
+    - name: caseLevel
+      title: Case Level (value)
+      type: String
+      default: '1'
+
+    - name: ciLevel
+      title: Confidence Level
+      type: Number
+      min: 0.80
+      max: 0.99
+      default: 0.95
+
+    - name: showAR
+      title: Show Attributable Risk
+      type: Bool
+      default: true
+
+    - name: showPAR
+      title: Show Population Attributable Risk
+      type: Bool
+      default: true
+
+    - name: showForest
+      title: Show forest-style estimate plot
+      type: Bool
+      default: true

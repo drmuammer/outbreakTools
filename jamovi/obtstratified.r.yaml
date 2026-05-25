@@ -1,0 +1,49 @@
+name: obtstratified
+title: Stratified Analysis (Mantel-Haenszel)
+jrs: '1.1'
+
+items:
+    - name: crudeTable
+      title: Crude (Unadjusted) Estimate
+      type: Table
+      columns:
+          - {name: measure,  title: Measure,   type: text}
+          - {name: estimate, title: Estimate,  type: number, format: zto}
+          - {name: ci_low,   title: CI Low,    type: number, format: zto}
+          - {name: ci_high,  title: CI High,   type: number, format: zto}
+          - {name: p_value,  title: p-value,   type: number, format: 'zto,pvalue'}
+    - name: strataTable
+      title: Stratum-Specific Estimates
+      type: Table
+      columns:
+          - {name: stratum,  title: Stratum,   type: text}
+          - {name: a,        title: a,          type: integer}
+          - {name: b,        title: b,          type: integer}
+          - {name: c,        title: c,          type: integer}
+          - {name: d,        title: d,          type: integer}
+          - {name: estimate, title: 'RR / OR',  type: number, format: zto}
+          - {name: ci_low,   title: CI Low,    type: number, format: zto}
+          - {name: ci_high,  title: CI High,   type: number, format: zto}
+    - name: mhTable
+      title: Mantel-Haenszel Adjusted Estimate
+      type: Table
+      columns:
+          - {name: measure,  title: Measure,   type: text}
+          - {name: crude,    title: Crude,     type: number, format: zto}
+          - {name: adjusted, title: MH Adjusted,type: number, format: zto}
+          - {name: ci_low,   title: CI Low,    type: number, format: zto}
+          - {name: ci_high,  title: CI High,   type: number, format: zto}
+          - {name: p_value,  title: p-value,   type: number, format: 'zto,pvalue'}
+    - name: bdTable
+      title: Breslow-Day Test (Effect Modification)
+      type: Table
+      columns:
+          - {name: test,  title: Test,    type: text}
+          - {name: stat,  title: Chi-sq,  type: number, format: zto}
+          - {name: df,    title: df,      type: integer}
+          - {name: p,     title: p-value, type: number, format: 'zto,pvalue'}
+          - {name: interp,title: Interpretation, type: text}
+    - name: mhNote
+      title: Interpretation & References
+      type: Html
+      visible: always

@@ -1,0 +1,128 @@
+---
+name: obtclean
+title: Data Quality & Linelist Check
+menuGroup: Outbreak Tools
+menuSubgroup: 1. Data Management
+version: '1.0.0'
+jas: '1.2'
+
+description:
+    main: >
+        Automated outbreak linelist quality audit. Detects duplicate records,
+        missing data patterns, impossible/future dates, out-of-range numeric
+        values, and inconsistent categorical coding. Generates a structured
+        cleaning report for field documentation.
+
+options:
+    - name: data
+      type: Data
+
+    - name: idVar
+      title: Unique Case ID Variable
+      type: Variable
+      suggested: [id, nominal]
+      permitted: [factor, id, numeric]
+      default: null
+
+    - name: dateVars
+      title: Date Variables to Audit
+      type: Variables
+      suggested: [continuous, ordinal]
+      permitted: [numeric, factor, id]
+      default: null
+
+    - name: dateFormat
+      title: Expected Date Format
+      type: List
+      options:
+          - {title: Auto-detect, name: auto}
+          - {title: 'YYYY-MM-DD (ISO)', name: ymd}
+          - {title: 'DD/MM/YYYY', name: dmy}
+          - {title: 'MM/DD/YYYY', name: mdy}
+      default: auto
+
+    - name: refStartDate
+      title: Outbreak Start Date (YYYY-MM-DD)
+      type: String
+      default: ''
+
+    - name: catVars
+      title: Categorical Variables to Audit
+      type: Variables
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+      default: null
+
+    - name: numVars
+      title: Numeric Variables to Audit
+      type: Variables
+      suggested: [continuous]
+      permitted: [numeric]
+      default: null
+
+    - name: ageVar
+      title: Age Variable (for range check)
+      type: Variable
+      suggested: [continuous]
+      permitted: [numeric]
+      default: null
+
+    - name: ageMin
+      title: Minimum plausible age (years)
+      type: Integer
+      min: 0
+      max: 10
+      default: 0
+
+    - name: ageMax
+      title: Maximum plausible age (years)
+      type: Integer
+      min: 50
+      max: 130
+      default: 110
+
+    - name: missingThreshold
+      title: Flag variables with missing > (%)
+      type: Number
+      min: 0
+      max: 100
+      default: 20
+
+    - name: showDuplicates
+      title: Check for duplicate IDs
+      type: Bool
+      default: true
+
+    - name: showMissing
+      title: Show missing data summary
+      type: Bool
+      default: true
+
+    - name: showCatIssues
+      title: Show categorical coding issues
+      type: Bool
+      default: true
+
+    # ---- Smart Data Cleaning Assistant (v1.1.0) -------------------------
+    - name: showClustering
+      title: Detect duplicate-variant clusters (OpenRefine-style)
+      type: Bool
+      default: true
+
+    - name: clusterMethod
+      title: Clustering method
+      type: List
+      options:
+          - {title: Fingerprint (recommended), name: fingerprint}
+          - {title: n-gram (catches typos),     name: ngram}
+      default: fingerprint
+
+    - name: showDateDiversity
+      title: Detect mixed date formats in date variables
+      type: Bool
+      default: true
+
+    - name: showRCode
+      title: Show copy-paste R cleaning recipes
+      type: Bool
+      default: true

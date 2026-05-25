@@ -1,0 +1,58 @@
+# =============================================================================
+# outbreakTools — .gitignore
+# =============================================================================
+
+# --- R session artifacts ---------------------------------------------------
+.Rhistory
+.RData
+.Ruserdata
+.Rapp.history
+
+# --- RStudio project files -------------------------------------------------
+.Rproj.user/
+*.Rproj
+
+# --- OS-specific files -----------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- Build artifacts -------------------------------------------------------
+# .jmo binaries are distributed via GitHub Releases, not committed
+*.jmo
+build/
+*.tar.gz
+
+# --- jmvtools build cache --------------------------------------------------
+inst/jamovi-build/
+*.h.R~
+*.b.R~
+
+# --- IDE configurations ----------------------------------------------------
+.vscode/
+.idea/
+*.sublime-*
+
+# --- Python (in case anyone runs auxiliary scripts) ------------------------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# --- Backup files ----------------------------------------------------------
+*~
+*.bak
+*.tmp
+*.swp
+
+# --- Local credentials / config (NEVER commit these) -----------------------
+.env
+.env.local
+*.key
+*.pem
+credentials.yaml

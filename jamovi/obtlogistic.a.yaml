@@ -1,0 +1,42 @@
+name: obtlogistic
+title: Logistic Regression
+menuGroup: Outbreak Tools
+menuSubgroup: 3. Analytic Epidemiology
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+    - name: outcomeVar
+      title: Outcome Variable (binary)
+      type: Variable
+      suggested: [nominal, ordinal]
+      permitted: [factor, id]
+    - name: caseLevel
+      title: Case Level
+      type: String
+      default: '1'
+    - name: exposures
+      title: Exposure / Predictor Variables
+      type: Variables
+      suggested: [nominal, ordinal, continuous]
+      permitted: [factor, id, numeric]
+    - name: autoScreen
+      title: Auto-screen variables (p < 0.25)
+      type: Bool
+      default: true
+    - name: ciLevel
+      title: Confidence Level
+      type: Number
+      min: 0.80
+      max: 0.99
+      default: 0.95
+    - name: showForest
+      title: Show Forest Plot
+      type: Bool
+      default: true
+    - name: showFit
+      title: Show model fit statistics
+      type: Bool
+      default: true

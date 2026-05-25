@@ -1,0 +1,28 @@
+name: obtsamplesize
+title: Sample Size Calculator
+jrs: '1.1'
+
+items:
+    - name: ssTable
+      title: Sample Size Requirements
+      type: Table
+      columns:
+          - {name: parameter, title: Parameter, type: text}
+          - {name: value,     title: Value,     type: text}
+    - name: powerTable
+      title: Power Curve
+      type: Table
+      columns:
+          - {name: effect, title: 'Effect Size (RR/OR)', type: number, format: zto}
+          - {name: n80,    title: 'N (80% power)',       type: integer}
+          - {name: n90,    title: 'N (90% power)',       type: integer}
+    - name: powerPlot
+      title: Power Curve Plot
+      type: Image
+      width: 500
+      height: 340
+      renderFun: .plotPower
+    - name: ssNote
+      title: Methods & References
+      type: Html
+      visible: always
