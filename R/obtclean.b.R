@@ -142,7 +142,7 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
             mn_v  <- mean(vals, na.rm=TRUE)
             n_mis <- sum(is.na(vals))
             flag  <- ""
-            if (nvar == opts$ageVar) {
+            if (!is.null(opts$ageVar) && length(opts$ageVar) > 0 && nvar == opts$ageVar) {
               if (min_v < opts$ageMin || max_v > opts$ageMax) {
                 flag <- sprintf("⚠️ Out of range [%d–%d]", opts$ageMin, opts$ageMax)
                 issues <- c(issues, sprintf(
