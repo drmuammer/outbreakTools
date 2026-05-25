@@ -106,9 +106,16 @@ obtepicurveClass <- if (requireNamespace('jmvcore', quietly = TRUE))
         fill_col <- fill_map[[opts$fillColour]]
 
         span_days <- as.numeric(diff(range(pd$df$period, na.rm=TRUE)))
-        brk_unit  <- if (span_days <= 14) "1 week" else
-                     if (span_days <= 60) "2 weeks" else "1 month"
-        date_fmt  <- if (pd$unit == "month") "%b\n%Y" else "%d %b\n%Y"
+        # Smarter break intervals — prevent label crowding on wide spans
+        brk_unit  <- if (span_days <= 14)    "1 day"    else
+                     if (span_days <= 60)    "1 week"   else
+                     if (span_days <= 180)   "2 weeks"  else
+                     if (span_days <= 365)   "1 month"  else
+                     if (span_days <= 730)   "3 months" else
+                     if (span_days <= 1825)  "6 months" else
+                     if (span_days <= 3650)  "1 year"   else
+                                             "2 years"
+        date_fmt  <- if (pd$unit == "month" || span_days > 365) "%b %Y" else "%d %b\n%Y"
 
         bar_w <- switch(pd$unit, day=0.85, week=6.4, week_sun=6.4, month=27, 7)
 
@@ -143,10 +150,13 @@ obtepicurveClass <- if (requireNamespace('jmvcore', quietly = TRUE))
             y        = opts$yLabel,
             caption  = paste0(
               if (opts$showNLabel) paste0("N = ", pd$n, "   ") else "",
-              "Developed by Gülser Doğan Türkçelik & Muammer Beslen — Türkiye FETP | outbreakTools v1.0.0"
+              "Developed by Gulser Dogan Turkcelik & Muammer Beslen - Turkiye FETP | outbreakTools v1.1.0"
             )
           ) +
-          .obt_theme()
+          .obt_theme() +
+          ggplot2::theme(
+            axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1)
+          )
 
         print(p)
         TRUE

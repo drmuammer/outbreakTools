@@ -506,7 +506,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
   sprintf(
     '<div style="font-family:Arial,sans-serif;font-size:12px;color:#7B2C2C;
      background:#FFF3F3;border-left:4px solid #C00000;padding:8px 12px;
-     margin:4px 0;">⚠️ %s</div>', msg
+     margin:4px 0;">[!] %s</div>', msg
   )
 }
 
@@ -514,7 +514,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
   sprintf(
     '<div style="font-family:Arial,sans-serif;font-size:12px;color:#1E4620;
      background:#F0FFF2;border-left:4px solid #375623;padding:8px 12px;
-     margin:4px 0;">✅ %s</div>', msg
+     margin:4px 0;">[OK] %s</div>', msg
   )
 }
 
