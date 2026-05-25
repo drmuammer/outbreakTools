@@ -354,7 +354,7 @@ obtcleanResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="clusterTable",
                 title="Duplicate-Variant Clusters (OpenRefine-style)",
-                visible="(showClustering && catVars)",
+                visible="(showClustering)",
                 columns=list(
                     list(
                         `name`="variable",
@@ -380,7 +380,7 @@ obtcleanResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="dateFormatTable",
                 title="Date Format Diversity",
-                visible="(showDateDiversity && dateVars)",
+                visible="(showDateDiversity)",
                 columns=list(
                     list(
                         `name`="variable",

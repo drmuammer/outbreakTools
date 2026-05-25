@@ -65,7 +65,7 @@ items:
     - name: clusterTable
       title: Duplicate-Variant Clusters (OpenRefine-style)
       type: Table
-      visible: (showClustering && catVars)
+      visible: (showClustering)
       columns:
           - {name: variable,   title: Variable,    type: text}
           - {name: cluster_id, title: 'Cluster #', type: integer}
@@ -76,7 +76,7 @@ items:
     - name: dateFormatTable
       title: Date Format Diversity
       type: Table
-      visible: (showDateDiversity && dateVars)
+      visible: (showDateDiversity)
       columns:
           - {name: variable, title: Variable,            type: text}
           - {name: pattern,  title: Format pattern,      type: text}
