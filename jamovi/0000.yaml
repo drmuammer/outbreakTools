@@ -5,84 +5,92 @@ version: 1.1.0
 jms: '1.0'
 authors: []
 maintainer: Gülser Doğan Türkçelik <gulser.dogan@fetp.gov.tr>
-date: '2025-05-22'
+date: '2026-05-25'
 type: R
 description: >-
   A comprehensive outbreak analysis toolkit for jamovi developed for Field
   Epidemiology Training Programme (FETP) practitioners. Provides standardised
-  tools for
+  tools for outbreak investigation workflow: data quality auditing, descriptive
+  epidemiology, analytical methods (cohort, case-control, stratified, logistic),
+  and sample size planning.
 analyses:
-  - title: Case-Control Study — Odds Ratio
-    name: obtcasecontrol
-    ns: outbreakTools
-    category: analyses
-    menuGroup: Outbreak Tools
-    menuSubgroup: 3. Analytic Epidemiology
-    menuTitle: Case-Control Study — Odds Ratio
   - title: Data Quality & Linelist Check
     name: obtclean
     ns: outbreakTools
     category: analyses
     menuGroup: Outbreak Tools
-    menuSubgroup: 1. Data Management
+    menuSubgroup: 01. Data Management
     menuTitle: Data Quality & Linelist Check
     description: >
-      Automated outbreak linelist quality audit. Detects duplicate records,
-      missing data patterns, impossible/future dates, out-of-range numeric
-      values, and inconsistent categorical coding. Generates a structured
-      cleaning report for field documentation.
-  - title: Cohort Study — Risk Analysis
-    name: obtcohort
-    ns: outbreakTools
-    category: analyses
-    menuGroup: Outbreak Tools
-    menuSubgroup: 3. Analytic Epidemiology
-    menuTitle: Cohort Study — Risk Analysis
-    description: >
-      2×2 table analysis for cohort and cross-sectional outbreak designs.
-      Calculates Risk Ratio (Relative Risk), Attributable Risk, Population
-      Attributable Risk with 95% confidence intervals and chi-square tests.
-      Reference: Rothman & Greenland (2008); CDC Field Epi Manual (2012).
+      Automated outbreak linelist quality audit with OpenRefine-style cluster
+      detection. Detects duplicate records, missing data patterns,
+      impossible/future dates, out-of-range numeric values, inconsistent
+      categorical coding, and produces copy-paste R cleaning recipes.
+
   - title: Descriptive Epidemiology
     name: obtdescriptive
     ns: outbreakTools
     category: analyses
     menuGroup: Outbreak Tools
-    menuSubgroup: 2. Descriptive Analysis
+    menuSubgroup: 02. Descriptive Analysis
     menuTitle: Descriptive Epidemiology
+
   - title: Epidemic Curve
     name: obtepicurve
     ns: outbreakTools
     category: analyses
     menuGroup: Outbreak Tools
-    menuSubgroup: 2. Descriptive Analysis
+    menuSubgroup: 02. Descriptive Analysis
     menuTitle: Epidemic Curve
     description: >
       Generates publication-quality epidemic curves (histograms of case counts
       over time) for outbreak investigation. Supports ISO epi-week, day, and
-      month intervals. Includes optional case classification grouping and
-      case-count table.
-  - title: Logistic Regression
-    name: obtlogistic
+      month intervals.
+
+  - title: Cohort Study - Risk Analysis
+    name: obtcohort
     ns: outbreakTools
     category: analyses
     menuGroup: Outbreak Tools
-    menuSubgroup: 3. Analytic Epidemiology
-    menuTitle: Logistic Regression
-  - title: Sample Size Calculator
-    name: obtsamplesize
+    menuSubgroup: 03. Analytic Epidemiology
+    menuTitle: Cohort Study - Risk Analysis
+    description: >
+      2x2 table analysis for cohort and cross-sectional outbreak designs.
+      Calculates Risk Ratio, Attributable Risk, Population Attributable Risk
+      with 95% confidence intervals and chi-square tests.
+
+  - title: Case-Control Study - Odds Ratio
+    name: obtcasecontrol
     ns: outbreakTools
     category: analyses
     menuGroup: Outbreak Tools
-    menuSubgroup: 4. Study Design
-    menuTitle: Sample Size Calculator
+    menuSubgroup: 03. Analytic Epidemiology
+    menuTitle: Case-Control Study - Odds Ratio
+
   - title: Stratified Analysis (Mantel-Haenszel)
     name: obtstratified
     ns: outbreakTools
     category: analyses
     menuGroup: Outbreak Tools
-    menuSubgroup: 3. Analytic Epidemiology
+    menuSubgroup: 03. Analytic Epidemiology
     menuTitle: Stratified Analysis (Mantel-Haenszel)
+
+  - title: Logistic Regression
+    name: obtlogistic
+    ns: outbreakTools
+    category: analyses
+    menuGroup: Outbreak Tools
+    menuSubgroup: 03. Analytic Epidemiology
+    menuTitle: Logistic Regression
+
+  - title: Sample Size Calculator
+    name: obtsamplesize
+    ns: outbreakTools
+    category: analyses
+    menuGroup: Outbreak Tools
+    menuSubgroup: 04. Study Design
+    menuTitle: Sample Size Calculator
+
 usesNative: true
 minApp: 1.0.8
 
