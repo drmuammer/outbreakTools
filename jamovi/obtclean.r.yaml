@@ -1,106 +1,99 @@
 ---
 name: obtclean
 title: Data Quality & Linelist Check
-jrs: '1.1'
+jrs: "1.1"
 
 items:
-    - name: overviewTable
-      title: Dataset Overview
-      type: Table
-      columns:
-          - {name: metric, title: Metric, type: text}
-          - {name: value,  title: Value,  type: text}
+  - name: overviewTable
+    title: Dataset Overview
+    type: Table
+    columns:
+      - { name: metric, title: Metric, type: text }
+      - { name: value, title: Value, type: text }
 
-    - name: missingTable
-      title: Missing Data by Variable
-      type: Table
-      visible: (showMissing)
-      columns:
-          - {name: variable,   title: Variable,    type: text}
-          - {name: nMissing,   title: N Missing,   type: integer}
-          - {name: pctMissing, title: '% Missing', type: number, format: 'zto,pct'}
-          - {name: flag,       title: Flag,         type: text}
+  - name: missingTable
+    title: Missing Data by Variable
+    type: Table
+    visible: (showMissing)
+    columns:
+      - { name: variable, title: Variable, type: text }
+      - { name: nMissing, title: N Missing, type: integer }
+      - {
+          name: pctMissing,
+          title: "% Missing",
+          type: number,
+          format: "zto,pct",
+        }
+      - { name: flag, title: Flag, type: text }
 
-    - name: duplicateTable
-      title: Duplicate Records
-      type: Table
-      visible: (showDuplicates)
-      columns:
-          - {name: id,    title: ID Value,     type: text}
-          - {name: count, title: N Duplicates, type: integer}
+  - name: duplicateTable
+    title: Duplicate Records
+    type: Table
+    visible: (showDuplicates)
+    columns:
+      - { name: id, title: ID Value, type: text }
+      - { name: count, title: N Duplicates, type: integer }
 
-    - name: dateTable
-      title: Date Variable Audit
-      type: Table
-      visible: (dateVars)
-      columns:
-          - {name: variable,  title: Variable,   type: text}
-          - {name: issue,     title: Issue Type,  type: text}
-          - {name: nAffected, title: N Affected,  type: integer}
-          - {name: examples,  title: Examples,    type: text}
+  - name: dateTable
+    title: Date Variable Audit
+    type: Table
+    visible: (dateVars)
+    columns:
+      - { name: variable, title: Variable, type: text }
+      - { name: issue, title: Issue Type, type: text }
+      - { name: nAffected, title: N Affected, type: integer }
+      - { name: examples, title: Examples, type: text }
 
-    - name: numTable
-      title: Numeric Variable Audit
-      type: Table
-      visible: (numVars)
-      columns:
-          - {name: variable, title: Variable, type: text}
-          - {name: min_val,  title: Min,      type: number, format: zto}
-          - {name: max_val,  title: Max,      type: number, format: zto}
-          - {name: mean_val, title: Mean,     type: number, format: zto}
-          - {name: n_miss,   title: N Missing,type: integer}
-          - {name: flag,     title: Flag,      type: text}
+  - name: numTable
+    title: Numeric Variable Audit
+    type: Table
+    visible: (numVars)
+    columns:
+      - { name: variable, title: Variable, type: text }
+      - { name: min_val, title: Min, type: number, format: zto }
+      - { name: max_val, title: Max, type: number, format: zto }
+      - { name: mean_val, title: Mean, type: number, format: zto }
+      - { name: n_miss, title: N Missing, type: integer }
+      - { name: flag, title: Flag, type: text }
 
-    - name: catTable
-      title: Categorical Coding Audit
-      type: Table
-      visible: (showCatIssues)
-      columns:
-          - {name: variable, title: Variable,  type: text}
-          - {name: level,    title: Level,     type: text}
-          - {name: n,        title: N,          type: integer}
-          - {name: pct,      title: '%',        type: number, format: 'zto,pct'}
-          - {name: flag,     title: Flag,       type: text}
+  - name: catTable
+    title: Categorical Coding Audit
+    type: Table
+    visible: (showCatIssues)
+    columns:
+      - { name: variable, title: Variable, type: text }
+      - { name: level, title: Level, type: text }
+      - { name: n, title: N, type: integer }
+      - { name: pct, title: "%", type: number, format: "zto,pct" }
+      - { name: flag, title: Flag, type: text }
 
-    - name: clusterTable
-      title: Duplicate-Variant Clusters (OpenRefine-style)
-      type: Table
-      visible: (showClustering && catVars)
-      description: >
-        Likely duplicate string variants grouped by fingerprint or n-gram key.
-        Variants in the same cluster ID probably refer to the same real value
-        (e.g. "İSTANBUL" / "istanbul" / "Ist.").
-      columns:
-          - {name: variable,   title: Variable,    type: text}
-          - {name: cluster_id, title: 'Cluster #', type: integer}
-          - {name: variant,    title: Variant value, type: text}
-          - {name: n,          title: N occurrences, type: integer}
-          - {name: suggestion, title: Suggested canonical value, type: text}
+  - name: clusterTable
+    title: Duplicate-Variant Clusters (OpenRefine-style)
+    type: Table
+    visible: (showClustering && catVars)
+    columns:
+      - { name: variable, title: Variable, type: text }
+      - { name: cluster_id, title: "Cluster #", type: integer }
+      - { name: variant, title: Variant value, type: text }
+      - { name: n, title: N occurrences, type: integer }
+      - { name: suggestion, title: Suggested canonical value, type: text }
 
-    - name: dateFormatTable
-      title: Date Format Diversity
-      type: Table
-      visible: (showDateDiversity && dateVars)
-      description: >
-        Counts of distinct date-format patterns per date variable. A single
-        clean column should show only one pattern; multiple patterns indicate
-        inconsistent data entry.
-      columns:
-          - {name: variable, title: Variable,            type: text}
-          - {name: pattern,  title: Format pattern,      type: text}
-          - {name: n,        title: N records,           type: integer}
-          - {name: examples, title: Examples,            type: text}
+  - name: dateFormatTable
+    title: Date Format Diversity
+    type: Table
+    visible: (showDateDiversity && dateVars)
+    columns:
+      - { name: variable, title: Variable, type: text }
+      - { name: pattern, title: Format pattern, type: text }
+      - { name: n, title: N records, type: integer }
+      - { name: examples, title: Examples, type: text }
 
-    - name: rRecipes
-      title: R Cleaning Recipes (copy-paste)
-      type: Html
-      visible: (showRCode)
-      description: >
-        Generated R code snippets you can paste into Rj Editor, RStudio,
-        or RGui to clean the detected issues. Each recipe creates a new
-        column instead of modifying the original, so you can review changes.
+  - name: rRecipes
+    title: R Cleaning Recipes (copy-paste)
+    type: Html
+    visible: (showRCode)
 
-    - name: cleaningReport
-      title: Cleaning Report Summary
-      type: Html
-      visible: always
+  - name: cleaningReport
+    title: Cleaning Report Summary
+    type: Html
+    visible: always
