@@ -1,0 +1,98 @@
+name: Build Linux .jmo
+
+# Bu workflow her yeni release oluşturulduğunda otomatik çalışır.
+# Linux için outbreakTools'u derler ve release'e .jmo dosyasını ekler.
+
+on:
+  release:
+    types: [published]
+  # Manual tetikleme — Actions sekmesinden butonla da çalıştırılabilir
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+
+    steps:
+      # ----------------------------------------------------------------
+      # 1) Repo'yu çek
+      # ----------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ----------------------------------------------------------------
+      # 2) Sistem bağımlılıklarını kur (R paketleri için)
+      # ----------------------------------------------------------------
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev libssl-dev libxml2-dev \
+            libgit2-dev libfontconfig1-dev libharfbuzz-dev \
+            libfribidi-dev libfreetype6-dev libpng-dev \
+            libtiff5-dev libjpeg-dev libudunits2-dev \
+            libgdal-dev libgeos-dev libproj-dev libgsl-dev
+
+      # ----------------------------------------------------------------
+      # 3) R'ı kur
+      # ----------------------------------------------------------------
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.4.0'
+
+      # ----------------------------------------------------------------
+      # 4) Flatpak ve jamovi'yi kur
+      # ----------------------------------------------------------------
+      - name: Install jamovi (via flatpak)
+        run: |
+          sudo apt-get install -y flatpak
+          flatpak --user remote-add --if-not-exists flathub \
+            https://flathub.org/repo/flathub.flatpakrepo
+          flatpak --user install -y --noninteractive flathub org.jamovi.jamovi
+
+      # ----------------------------------------------------------------
+      # 5) jmvtools ve modül bağımlılıklarını kur
+      # ----------------------------------------------------------------
+      - name: Install R packages
+        run: |
+          R -e "install.packages('jmvtools', repos=c('https://repo.jamovi.org','https://cran.r-project.org'))"
+          R -e "install.packages(c('R6','jmvcore','dplyr','tidyr','ggplot2','lubridate','janitor','stringr','stringi','scales','epitools','epiR','purrr'), repos='https://cran.r-project.org')"
+
+      # ----------------------------------------------------------------
+      # 6) Modülü derle
+      # ----------------------------------------------------------------
+      - name: Build module
+        run: |
+          JAMOVI_HOME=~/.var/app/org.jamovi.jamovi/data/jamovi
+          R -e "jmvtools::install(home='$JAMOVI_HOME')"
+
+      # ----------------------------------------------------------------
+      # 7) Üretilen .jmo'yu yeniden adlandır
+      # ----------------------------------------------------------------
+      - name: Rename .jmo for Linux
+        run: |
+          mv outbreakTools_*.jmo outbreakTools_1.1.0_linux.jmo
+          ls -lh outbreakTools_1.1.0_linux.jmo
+
+      # ----------------------------------------------------------------
+      # 8) Artifact olarak yükle (her zaman yapılır — manual trigger'da
+      #    Release olmasa bile dosyaya erişebilirsin)
+      # ----------------------------------------------------------------
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: outbreakTools-linux
+          path: outbreakTools_1.1.0_linux.jmo
+          retention-days: 30
+
+      # ----------------------------------------------------------------
+      # 9) Release'e ekle (sadece release tetiklemesinde)
+      # ----------------------------------------------------------------
+      - name: Upload to release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: outbreakTools_1.1.0_linux.jmo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
