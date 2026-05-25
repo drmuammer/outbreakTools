@@ -1,7 +1,7 @@
 name: obtcasecontrol
 title: Case-Control Study — Odds Ratio
 menuGroup: Outbreak Tools
-menuSubgroup: 3. Analytic Epidemiology
+menuSubgroup: 03. Analytic Epidemiology
 version: '1.1.0'
 jas: '1.2'
 

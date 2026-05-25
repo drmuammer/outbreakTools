@@ -2,7 +2,7 @@
 name: obtepicurve
 title: Epidemic Curve
 menuGroup: Outbreak Tools
-menuSubgroup: 2. Descriptive Analysis
+menuSubgroup: 02. Descriptive Analysis
 version: '1.1.0'
 jas: '1.2'
 

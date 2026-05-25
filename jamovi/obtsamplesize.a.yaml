@@ -1,7 +1,7 @@
 name: obtsamplesize
 title: Sample Size Calculator
 menuGroup: Outbreak Tools
-menuSubgroup: 4. Study Design
+menuSubgroup: 04. Study Design
 version: '1.1.0'
 jas: '1.2'
 

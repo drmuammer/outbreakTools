@@ -2,7 +2,7 @@
 name: obtclean
 title: Data Quality & Linelist Check
 menuGroup: Outbreak Tools
-menuSubgroup: 1. Data Management
+menuSubgroup: 01. Data Management
 version: '1.1.0'
 jas: '1.2'
 
