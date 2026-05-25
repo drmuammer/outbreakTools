@@ -1,7 +1,7 @@
 # =============================================================================
-# outbreakTools — Core Statistical Utility Functions
+# outbreakTools - Core Statistical Utility Functions
 # File: R/utils.R
-# Authors: Gülser Doğan Türkçelik & Muammer Beslen — Türkiye FETP
+# Authors: Gülser Doğan Türkçelik & Muammer Beslen - Türkiye FETP
 # Version: 1.0.0
 #
 # Statistical References:
@@ -22,7 +22,7 @@
 # -----------------------------------------------------------------------------
 # NULL-COALESCING OPERATOR (compatibility shim)
 # Defined in base R from 4.4.0 onwards; we declare it locally so the module
-# also works on jamovi instances bundling R 4.1–4.3.
+# also works on jamovi instances bundling R 4.1-4.3.
 # -----------------------------------------------------------------------------
 if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
   `%||%` <- function(a, b) if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
@@ -211,7 +211,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
   ar_low  <- ar - z * se_ar
   ar_high <- ar + z * se_ar
 
-  # Population Attributable Risk (PAR) — Levin's formula
+  # Population Attributable Risk (PAR) - Levin's formula
   # PAR = (r_total - r0) / r_total
   r_total <- (a + c) / n
   par     <- if (r_total > 0) (r_total - r0) / r_total else NA_real_
@@ -459,7 +459,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
 
 
 # -----------------------------------------------------------------------------
-# COLOUR PALETTE — WHO/CDC compliant
+# COLOUR PALETTE - WHO/CDC compliant
 # -----------------------------------------------------------------------------
 .obt_palette <- function(n = 8) {
   cols <- c("#1F4E79","#C00000","#375623","#7030A0",
@@ -470,7 +470,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
 
 
 # -----------------------------------------------------------------------------
-# GGPLOT2 THEME — publication-quality FETP style
+# GGPLOT2 THEME - publication-quality FETP style
 # -----------------------------------------------------------------------------
 .obt_theme <- function() {
   ggplot2::theme_classic() +
@@ -521,7 +521,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
 
 # =============================================================================
 # OPENREFINE-STYLE DATA CLEANING HELPERS
-# Added in v1.1.0 — Smart Data Cleaning Assistant
+# Added in v1.1.0 - Smart Data Cleaning Assistant
 # =============================================================================
 
 # Turkish-aware character normalization
@@ -569,7 +569,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
 }
 
 
-#' n-gram fingerprint — catches near-typos ("ankra" vs "ankara")
+#' n-gram fingerprint - catches near-typos ("ankra" vs "ankara")
 #' Builds sorted unique character n-grams as the cluster key.
 .obt_ngramFingerprint <- function(x, n = 2) {
   if (length(x) == 0) return(character(0))
@@ -694,7 +694,7 @@ if (!exists("%||%", envir = baseenv(), inherits = FALSE)) {
 
 
 # -----------------------------------------------------------------------------
-# R RECIPE GENERATORS — produce copy-paste R code for common cleaning tasks
+# R RECIPE GENERATORS - produce copy-paste R code for common cleaning tasks
 # -----------------------------------------------------------------------------
 
 #' Build an HTML code block for the cleaning report
@@ -725,7 +725,7 @@ data$%s_clean <- stringi::stri_trans_totitle(
   data$%s_clean, locale = "tr_TR"
 )',
     varname, varname, varname, varname, varname)
-  .obt_codeBlock(sprintf("Recipe: normalize text — '%s'", varname), code)
+  .obt_codeBlock(sprintf("Recipe: normalize text - '%s'", varname), code)
 }
 
 #' Recipe: merge a cluster of variants into one canonical value
@@ -741,7 +741,7 @@ data$%s[data$%s %%in%% c(%s)] <- "%s"',
 #' Recipe: parse a column as Date with multiple format fallbacks
 .obt_recipeParseDate <- function(varname) {
   code <- sprintf(
-'# Parse "%s" as Date — tries multiple formats
+'# Parse "%s" as Date - tries multiple formats
 data$%s_date <- lubridate::parse_date_time(
   data$%s,
   orders = c("ymd", "dmy", "mdy", "Ymd", "dmY", "mdY")
@@ -774,5 +774,5 @@ data$%s_flag <- ifelse(
 na_codes <- c("", "NA", "N/A", ".", "99", "999", "Unknown", "unknown", "-")
 data$%s[data$%s %%in%% na_codes] <- NA',
     varname, varname, varname)
-  .obt_codeBlock(sprintf("Recipe: recode missing values — '%s'", varname), code)
+  .obt_codeBlock(sprintf("Recipe: recode missing values - '%s'", varname), code)
 }

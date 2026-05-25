@@ -1,7 +1,7 @@
 # =============================================================================
-# outbreakTools — Data Quality & Linelist Check
+# outbreakTools - Data Quality & Linelist Check
 # File: R/obt_clean.b.R
-# Authors: Gülser Doğan Türkçelik & Muammer Beslen — Türkiye FETP
+# Authors: Gülser Doğan Türkçelik & Muammer Beslen - Türkiye FETP
 # =============================================================================
 
 obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
@@ -45,8 +45,8 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
               issues <- c(issues, sprintf(
                 "Variable <b>%s</b>: %.0f%% missing (threshold %.0f%%)",
                 vname, pct_miss*100, opts$missingThreshold))
-              paste0("⚠️ >", opts$missingThreshold, "% missing")
-            } else if (pct_miss > 0) "ℹ️ Some missing" else "✓ Complete"
+              paste0("[!] >", opts$missingThreshold, "% missing")
+            } else if (pct_miss > 0) "[i] Some missing" else "[OK] Complete"
             mt$addRow(rowKey = vname,
                       values = list(variable=vname, nMissing=as.integer(n_miss),
                                     pctMissing=pct_miss, flag=flag_txt))
@@ -62,7 +62,7 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
           dupes <- id_tb[id_tb > 1]
           if (length(dupes) == 0) {
             dt$addRow(rowKey="ok",
-                      values=list(id="✓ No duplicate IDs found", count=0L))
+                      values=list(id="[OK] No duplicate IDs found", count=0L))
           } else {
             issues <- c(issues, sprintf(
               "<b>%d duplicate ID(s)</b> detected in <b>%s</b>", length(dupes), opts$idVar))
@@ -120,12 +120,12 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
                            values=list(variable=dvar, issue="Could not parse as date",
                                        nAffected=as.integer(n_fail), examples=ex))
               row_key <- row_key + 1L
-              issues <- c(issues, sprintf("<b>%s</b>: %d unparseable date(s) — check format", dvar, n_fail))
+              issues <- c(issues, sprintf("<b>%s</b>: %d unparseable date(s) - check format", dvar, n_fail))
             }
             if (n_fut == 0 && n_fail == 0 && (is.null(ref_start) ||
                 sum(!is.na(parsed) & parsed < ref_start) == 0)) {
               dat_t$addRow(rowKey=row_key,
-                           values=list(variable=dvar, issue="✓ No date issues",
+                           values=list(variable=dvar, issue="[OK] No date issues",
                                        nAffected=0L, examples=""))
               row_key <- row_key + 1L
             }
@@ -144,9 +144,9 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
             flag  <- ""
             if (!is.null(opts$ageVar) && length(opts$ageVar) > 0 && nvar == opts$ageVar) {
               if (min_v < opts$ageMin || max_v > opts$ageMax) {
-                flag <- sprintf("⚠️ Out of range [%d–%d]", opts$ageMin, opts$ageMax)
+                flag <- sprintf("[!] Out of range [%d-%d]", opts$ageMin, opts$ageMax)
                 issues <- c(issues, sprintf(
-                  "<b>%s</b>: values outside plausible age range [%d–%d]",
+                  "<b>%s</b>: values outside plausible age range [%d-%d]",
                   nvar, opts$ageMin, opts$ageMax))
               }
             }
@@ -178,11 +178,11 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
               flag   <- ""
               if (is.na(lvl_nm)) {
                 lvl_nm <- "(Missing)"
-                if (pct_v > opts$missingThreshold/100) flag <- "⚠️ High missing"
+                if (pct_v > opts$missingThreshold/100) flag <- "[!] High missing"
               } else if (n_lvl == 1) {
-                flag <- "⚠️ Singleton (n=1)"
+                flag <- "[!] Singleton (n=1)"
               } else if (case_inconsistent) {
-                flag <- "⚠️ Check capitalisation"
+                flag <- "[!] Check capitalisation"
               }
               cat_t$addRow(rowKey=row_key,
                            values=list(variable=cvar, level=lvl_nm,
@@ -233,9 +233,9 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
           # If no clusters anywhere, add a friendly placeholder row
           if (row_key == 1L) {
             ct$addRow(rowKey = "ok", values = list(
-              variable = "—",
+              variable = "-",
               cluster_id = 0L,
-              variant = "✓ No duplicate-variant clusters detected",
+              variant = "[OK] No duplicate-variant clusters detected",
               n = 0L,
               suggestion = ""))
           }
@@ -264,7 +264,7 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
             }
             if (nrow(fmt) > 1) {
               issues <- c(issues, sprintf(
-                "<b>%s</b>: %d different date format(s) found — inconsistent data entry",
+                "<b>%s</b>: %d different date format(s) found - inconsistent data entry",
                 dvar, nrow(fmt)))
             }
           }
@@ -281,7 +281,7 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
                         padding:10px 14px;margin:6px 0 14px 0;">
               <b>How to use these recipes:</b><br>
               Copy any code block below and paste into <b>Rj Editor</b>
-              (Modules → jamovi-library → Rj), <b>RStudio</b>, or <b>RGui</b>.
+              (Modules -> jamovi-library -> Rj), <b>RStudio</b>, or <b>RGui</b>.
               Each recipe creates a new <i>_clean</i> column instead of
               overwriting the original, so you can review changes before
               committing. Replace <code>data</code> with your actual data
@@ -356,12 +356,12 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
         html <- sprintf(
           '<div style="font-family:\'Segoe UI\',Arial,sans-serif;font-size:13px;">
            <div style="background:#1F4E79;color:white;padding:10px 14px;border-radius:4px 4px 0 0;margin-bottom:8px;">
-           <b>📋 Linelist Cleaning Report</b> &nbsp;|&nbsp;
+           <b>[REPORT] Linelist Cleaning Report</b> &nbsp;|&nbsp;
            outbreakTools v1.0.0 &nbsp;|&nbsp; %s</div>
            <p><b>Records:</b> %d &nbsp;|&nbsp; <b>Variables:</b> %d &nbsp;|&nbsp;
            <b>Complete cases:</b> %d (%.0f%%)</p>%s
            <p style="color:#888;font-size:10.5px;margin-top:14px;border-top:1px solid #eee;padding-top:6px;">
-           Developed by Gülser Doğan Türkçelik &amp; Muammer Beslen — Türkiye FETP</p></div>',
+           Developed by Gülser Doğan Türkçelik &amp; Muammer Beslen - Türkiye FETP</p></div>',
           format(Sys.time(), "%Y-%m-%d %H:%M"),
           n_rows, n_cols, complete_n, 100*complete_n/n_rows, body
         )
