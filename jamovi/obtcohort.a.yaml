@@ -2,7 +2,7 @@ name: obtcohort
 title: Cohort Study — Risk Analysis
 menuGroup: Outbreak Tools
 menuSubgroup: 3. Analytic Epidemiology
-version: '1.0.0'
+version: '1.1.0'
 jas: '1.2'
 
 description:

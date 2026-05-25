@@ -2,7 +2,7 @@ name: obtstratified
 title: Stratified Analysis (Mantel-Haenszel)
 menuGroup: Outbreak Tools
 menuSubgroup: 3. Analytic Epidemiology
-version: '1.0.0'
+version: '1.1.0'
 jas: '1.2'
 
 options:
