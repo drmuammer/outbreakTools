@@ -65,8 +65,8 @@ obtsamplesizeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
            <b>Result:</b> %d total participants required (%s=%d, %s=%d).<br>
            <b>Assumptions:</b> p0=%.1f%%, p1=%.1f%%, %s=%.2f, alpha=%.2f, power=%.0f%%.<br>
            <b>Method:</b> %s<br>
-           <b>Developed by:</b> Gulser Dogan Turkccelik &amp; Muammer Beslen — Turkiye FETP
-           | outbreakTools v1.0.0</div>',
+           <b>Developed by:</b> Gulser Dogan Turkcelik &amp; Muammer Beslen - Turkiye FETP
+           | outbreakTools v1.1.0</div>',
           res$n_total, n1_label, res[[1]], n0_label, res[[2]],
           p0*100, res$p1*100, effect_label, effect, alpha, power*100,
           if (design %in% c("cohort","crosssectional"))
@@ -92,7 +92,7 @@ obtsamplesizeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
           ggplot2::labs(x="Effect Size (RR or OR)", y="Total Sample Size Required",
                         title="Power Curve",
                         colour="Power", linetype="Power",
-                        caption="outbreakTools v1.0.0 | Turkiye FETP") +
+                        caption="outbreakTools v1.1.0 | Turkiye FETP") +
           .obt_theme()
         print(p); TRUE
       }

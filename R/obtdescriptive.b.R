@@ -1,5 +1,5 @@
 # =============================================================================
-# outbreakTools — Descriptive Epidemiology
+# outbreakTools - Descriptive Epidemiology
 # File: R/obt_descriptive.b.R
 # =============================================================================
 
@@ -30,12 +30,12 @@ obtdescriptiveClass <- if (requireNamespace('jmvcore', quietly=TRUE))
         age_v <- age_v[!is.na(age_v)]
         stats_list <- list(
           c("N with age",        as.character(length(age_v))),
-          c("Median [IQR]",      sprintf("%.0f [%.0f–%.0f]",
+          c("Median [IQR]",      sprintf("%.0f [%.0f-%.0f]",
                                           stats::median(age_v),
                                           stats::quantile(age_v, 0.25),
                                           stats::quantile(age_v, 0.75))),
           c("Mean (SD)",         sprintf("%.1f (%.1f)", mean(age_v), stats::sd(age_v))),
-          c("Range",             sprintf("%.0f – %.0f", min(age_v), max(age_v))),
+          c("Range",             sprintf("%.0f - %.0f", min(age_v), max(age_v))),
           c("Missing age (cases)", as.character(sum(is.na(
             suppressWarnings(as.numeric(data[[opts$ageVar]][is_case]))))))
         )
@@ -88,8 +88,8 @@ obtdescriptiveClass <- if (requireNamespace('jmvcore', quietly=TRUE))
          (Wilson 1927; Brown et al. 2001).<br>
          <b>Reference:</b> Rothman KJ, Greenland S, Lash TL (2008). Modern Epidemiology, 3rd ed.
          Lippincott Williams &amp; Wilkins.<br>
-         <b>Developed by:</b> Gülser Doğan Türkçelik &amp; Muammer Beslen — Türkiye FETP
-         | outbreakTools v1.0.0</div>',
+         <b>Developed by:</b> Gulser Dogan Turkcelik &amp; Muammer Beslen - Turkiye FETP
+         | outbreakTools v1.1.0</div>',
         stringr::str_to_title(method), lev*100
       )
       self$results$descNote$setContent(note_html)

@@ -1,7 +1,7 @@
 # =============================================================================
-# outbreakTools — Epidemic Curve
+# outbreakTools - Epidemic Curve
 # File: R/obt_epicurve.b.R
-# Authors: Gülser Doğan Türkçelik & Muammer Beslen — Türkiye FETP
+# Authors: Gulser Dogan Turkcelik & Muammer Beslen - Turkiye FETP
 # =============================================================================
 
 obtepicurveClass <- if (requireNamespace('jmvcore', quietly = TRUE))
@@ -78,7 +78,7 @@ obtepicurveClass <- if (requireNamespace('jmvcore', quietly = TRUE))
            line-height:1.9;">
            <b>Total cases:</b> %d &nbsp;|&nbsp; <b>Dates parsed:</b> %d
            &nbsp;|&nbsp; <b>Missing dates:</b> %d<br>
-           <b>Outbreak period:</b> %s — %s &nbsp;|&nbsp;
+           <b>Outbreak period:</b> %s - %s &nbsp;|&nbsp;
            <b>Duration:</b> %d %s(s)<br>
            <b>Peak period:</b> %s (n = %d)<br>
            <span style="color:#555;font-size:11px;">Time unit: %s &nbsp;|&nbsp;
@@ -106,7 +106,7 @@ obtepicurveClass <- if (requireNamespace('jmvcore', quietly = TRUE))
         fill_col <- fill_map[[opts$fillColour]]
 
         span_days <- as.numeric(diff(range(pd$df$period, na.rm=TRUE)))
-        # Smarter break intervals — prevent label crowding on wide spans
+        # Smarter break intervals - prevent label crowding on wide spans
         brk_unit  <- if (span_days <= 14)    "1 day"    else
                      if (span_days <= 60)    "1 week"   else
                      if (span_days <= 180)   "2 weeks"  else

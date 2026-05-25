@@ -1,7 +1,7 @@
 # =============================================================================
 # outbreakTools - Data Quality & Linelist Check
 # File: R/obt_clean.b.R
-# Authors: Gülser Doğan Türkçelik & Muammer Beslen - Türkiye FETP
+# Authors: Gulser Dogan Turkcelik & Muammer Beslen - Turkiye FETP
 # =============================================================================
 
 obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
@@ -194,7 +194,7 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
 
         # ── CLUSTER DETECTION (OpenRefine-style) ─────────────────────────────
         # Detects likely duplicate string variants:
-        # "İSTANBUL", "istanbul", "ISTANBUL", "Ist." → same cluster
+        # "ISTANBUL", "istanbul", "ISTANBUL", "Ist." -> same cluster
         clusters_per_var <- list()
         if (isTRUE(opts$showClustering) && length(opts$catVars) > 0) {
           ct <- self$results$clusterTable
@@ -357,11 +357,11 @@ obtcleanClass <- if (requireNamespace('jmvcore', quietly = TRUE))
           '<div style="font-family:\'Segoe UI\',Arial,sans-serif;font-size:13px;">
            <div style="background:#1F4E79;color:white;padding:10px 14px;border-radius:4px 4px 0 0;margin-bottom:8px;">
            <b>[REPORT] Linelist Cleaning Report</b> &nbsp;|&nbsp;
-           outbreakTools v1.0.0 &nbsp;|&nbsp; %s</div>
+           outbreakTools v1.1.0 &nbsp;|&nbsp; %s</div>
            <p><b>Records:</b> %d &nbsp;|&nbsp; <b>Variables:</b> %d &nbsp;|&nbsp;
            <b>Complete cases:</b> %d (%.0f%%)</p>%s
            <p style="color:#888;font-size:10.5px;margin-top:14px;border-top:1px solid #eee;padding-top:6px;">
-           Developed by Gülser Doğan Türkçelik &amp; Muammer Beslen - Türkiye FETP</p></div>',
+           Developed by Gulser Dogan Turkcelik &amp; Muammer Beslen - Turkiye FETP</p></div>',
           format(Sys.time(), "%Y-%m-%d %H:%M"),
           n_rows, n_cols, complete_n, 100*complete_n/n_rows, body
         )

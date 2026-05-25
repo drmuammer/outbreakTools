@@ -130,7 +130,7 @@ obtlogisticClass <- if (requireNamespace('jmvcore', quietly=TRUE))
           ggplot2::scale_x_log10() +
           ggplot2::labs(x="Adjusted Odds Ratio (log scale)", y=NULL,
                         title="Multivariable Logistic Regression - Adjusted OR",
-                        caption="outbreakTools v1.0.0 | Turkiye FETP") +
+                        caption="outbreakTools v1.1.0 | Turkiye FETP") +
           .obt_theme()
         print(p); TRUE
       }

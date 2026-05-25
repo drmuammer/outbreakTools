@@ -1,12 +1,12 @@
 # =============================================================================
-# outbreakTools — Stratified (MH), Logistic Regression, Sample Size
+# outbreakTools - Stratified (MH), Logistic Regression, Sample Size
 # File: R/obt_stratified.b.R
-# Authors: Gülser Doğan Türkçelik & Muammer Beslen — Türkiye FETP
+# Authors: Gulser Dogan Turkcelik & Muammer Beslen - Turkiye FETP
 # =============================================================================
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# STRATIFIED ANALYSIS — MANTEL-HAENSZEL
+# STRATIFIED ANALYSIS - MANTEL-HAENSZEL
 # Reference: Mantel & Haenszel (1959); Rothman & Greenland (2008) pp.258-264
 #            Breslow & Day (1980) IARC Vol.1 pp.142-146
 # ─────────────────────────────────────────────────────────────────────────────
@@ -113,23 +113,23 @@ obtstratifiedClass <- if (requireNamespace('jmvcore', quietly=TRUE))
       bdt <- self$results$bdTable; bdt$deleteRows()
       interp <- if (is.na(bd$p_value)) "Insufficient data" else
                 if (bd$p_value < 0.05)
-                  "⚠️ Significant — effect modification likely (report stratum-specific estimates)"
-                else "✓ Non-significant — no evidence of effect modification (use MH adjusted estimate)"
+                  "[!] Significant - effect modification likely (report stratum-specific estimates)"
+                else "[OK] Non-significant - no evidence of effect modification (use MH adjusted estimate)"
       bdt$addRow(rowKey="bd", values=list(test="Breslow-Day test (homogeneity)",
                  stat=bd$chi2, df=as.integer(bd$df),
                  p=bd$p_value, interp=interp))
 
       note <- sprintf(
         '<div style="font-family:Arial,sans-serif;font-size:12px;line-height:1.85;">
-         <b>Crude %s:</b> %.2f (%.0f%% CI: %.2f–%.2f)<br>
-         <b>MH Adjusted %s:</b> %.2f (%.0f%% CI: %.2f–%.2f, p=%.3f)<br>
-         <b>Breslow-Day test:</b> χ²=%.2f, df=%d, p=%.3f — %s<br>
+         <b>Crude %s:</b> %.2f (%.0f%% CI: %.2f-%.2f)<br>
+         <b>MH Adjusted %s:</b> %.2f (%.0f%% CI: %.2f-%.2f, p=%.3f)<br>
+         <b>Breslow-Day test:</b> chi-squared=%.2f, df=%d, p=%.3f - %s<br>
          <b>Strata:</b> %s (%d strata)<br>
-         <b>Methods:</b> MH formula — Mantel &amp; Haenszel (1959);
-         Variance — Greenland &amp; Robins (1985);
-         Breslow-Day — Breslow &amp; Day (1980) IARC Vol.1.<br>
-         <b>Developed by:</b> Gülser Doğan Türkçelik &amp; Muammer Beslen — Türkiye FETP
-         | outbreakTools v1.0.0</div>',
+         <b>Methods:</b> MH formula - Mantel &amp; Haenszel (1959);
+         Variance - Greenland &amp; Robins (1985);
+         Breslow-Day - Breslow &amp; Day (1980) IARC Vol.1.<br>
+         <b>Developed by:</b> Gulser Dogan Turkcelik &amp; Muammer Beslen - Turkiye FETP
+         | outbreakTools v1.1.0</div>',
         label, cr_est, lev*100, cr_lo, cr_hi,
         label, mh_est, lev*100, mh_lo, mh_hi, mh_p,
         bd$chi2, bd$df, bd$p_value,
